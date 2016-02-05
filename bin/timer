@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+'use strict'
+var t = require('../lib')
+t(process)

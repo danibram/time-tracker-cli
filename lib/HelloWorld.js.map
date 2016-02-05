@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/HelloWorld.js"],"names":[],"mappings":";;;;;;;;IACqB,UAAU,GAC3B,SADiB,UAAU,GACd;0BADI,UAAU;;AAEvB,WAAO,CAAC,GAAG,CAAC,kBAAkB,CAAC,CAAA;CAClC;;kBAHgB,UAAU","file":"HelloWorld.js","sourcesContent":["\nexport default class HelloWorld {\n    constructor(){\n        console.log('Hello  Magician!')\n    }\n}\n"]}

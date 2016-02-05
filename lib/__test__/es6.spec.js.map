@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/__test__/es6.spec.js"],"names":[],"mappings":";;;;;;;;AAEA,SAAS,kBAAT,EAA6B,YAAM;AACjC,KAAG,mBAAH,EAAwB,YAAM;AAC5B,sBAD4B;GAAN,CAAxB,CADiC;CAAN,CAA7B","file":"es6.spec.js","sourcesContent":["import es6FreshModule from '../'\n\ndescribe('es6-fresh-module', () => {\n  it(\"should be awesome\", () => {\n    es6FreshModule()\n  })\n})\n"]}
