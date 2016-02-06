@@ -1,43 +1,71 @@
 import flat from 'flat'
-import Task from './Task'
 
+import moment from 'moment'
 import Configstore from 'configstore'
 import pkg from '../package.json'
 
 export class Manager {
     constructor(cfg) {
-        this.tasks = flat(cfg.all.tasks)
+        this.tasks = cfg.all.tasks
     }
 
     getTask(name) {
-        return (this.tasks[name]) ? new Task(this.tasks[name]) : new Task()
+        return (this.tasks[name]) ? this.tasks[name] : {}
     }
 
     storeTasks() {
-        config.set('tasks', flat.unflatten(this.tasks))
+        config.set('tasks', this.tasks)
     }
 
     setTask(name, obj) {
         let update = {}
         update[name] = obj
         this.tasks = Object.assign({}, this.tasks, update)
-    }
-
-    start(name) {
-        let t = this.getTask(name)
-        t.start()
         this.storeTasks()
     }
 
-    stop(name) {
+    start(name, description) {
         let t = this.getTask(name)
-        t.stop()
-        this.storeTasks()
+        if (!t.start) {
+            t.start = moment().toDate()
+            if (description) t.description = description
+            this.setTask(name, t)
+        }
+    }
+
+    stop(name, description) {
+        let t = this.getTask(name)
+        if (!t.stop) {
+            t.stop = moment().toDate()
+            if (description) t.description = description
+            this.setTask(name, t)
+        }
     }
 
     getTime(name) {
         let t = this.getTask(name)
-        return t.getTime()
+        if (t.stop) {
+            return moment(t.stop).diff(moment(t.start), 'seconds')
+        } else {
+            return moment().diff(moment(t.start), 'seconds')
+        }
+    }
+
+    search(string) {
+        let keys = Object.keys(this.tasks)
+        let tasks = []
+        keys.map((key)=>{
+            if (string === 'all' || key.indexOf(string) > -1){
+                tasks.push({
+                    name: key,
+                    task: this.tasks[key]
+                })
+            }
+        })
+        return tasks
+    }
+    getTasksJson() {
+        return flat.unflatten(this.tasks)
     }
 }
 

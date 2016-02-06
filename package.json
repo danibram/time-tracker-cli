@@ -1,7 +1,10 @@
 {
-  "name": "es6-seed-module",
+  "name": "time-tracker-cli",
   "version": "1.0.0",
-  "description": "Simplist seed to create a fully ES6 module",
+  "description": "Tiny time tracker",
+  "bin": {
+    "timer": "./bin/timer"
+  },
   "main": "./lib",
   "scripts": {
     "build": "node_modules/.bin/babel -s -d lib src",
