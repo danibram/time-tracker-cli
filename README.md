@@ -7,7 +7,7 @@
 [![asciicast](https://asciinema.org/a/35678.png)](https://asciinema.org/a/35678)
 
 ```
-±❩❩❩ ./bin/timer --help
+±❩❩❩ timer --help
 
   Usage: timer [options]
 
