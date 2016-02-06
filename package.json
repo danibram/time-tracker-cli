@@ -1,6 +1,6 @@
 {
   "name": "time-tracker-cli",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Tiny time tracker",
   "bin": {
     "timer": "./bin/timer"
@@ -33,6 +33,7 @@
     "commander": "^2.9.0",
     "configstore": "^1.4.0",
     "flat": "^2.0.0",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "update-notifier": "^0.6.0"
   }
 }
