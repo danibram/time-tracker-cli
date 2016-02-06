@@ -21,8 +21,10 @@ export const repeatChar = function (char, times) {
 
 export const sumarize = function(search, tasks) {
     let table = new Table({
-        head: ['Time', 'Start', 'Task'],
-        chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''}
+        head: ['Duration', 'Dates', 'Task'],
+        chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+        colAligns: ['right', 'center', 'left'],
+        style: { head: ['green'] }
     });
     let total = 0
     let head= `Search: ${search} \n`
@@ -35,12 +37,18 @@ export const sumarize = function(search, tasks) {
 
         let name = task.name
         let startTime = moment(task.task.start).format('DD/MM/YYYY')
-
+        let stopTime = moment(task.task.stop).format('DD/MM/YYYY')
+        if (startTime !== stopTime){
+            startTime = moment(task.task.start).format('DD/MM') + '|' + moment(task.task.stop).format('DD/MM YYYY')
+        }
         table.push([outputDuration, startTime, name])
     })
 
     console.log(table.toString());
     let table2 = new Table()
-    table2.push([`Search: ${search}`, 'Total time', humanParseDiff(total)])
+    table2.push(
+        { 'Search': ['\"' + search + '\"'] },
+        { 'Total time': [humanParseDiff(total)] }
+    )
     console.log(table2.toString());
 }
