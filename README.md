@@ -3,6 +3,9 @@
 [![Dependency Status](https://david-dm.org/danibram/time-tracker-cli.svg)](https://david-dm.org/danibram/time-tracker-cli)
 
 ## Usage
+
+[![asciicast](https://asciinema.org/a/35678.png)](https://asciinema.org/a/35678)
+
 ```
 ±❩❩❩ ./bin/timer --help
 
