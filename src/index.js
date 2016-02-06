@@ -1,11 +1,14 @@
 import 'babel-polyfill'
 
 import program from 'commander'
+import updateNotifier from 'update-notifier'
 
 import Task from './Task'
 import {humanParseDiff, sumarize} from './Output'
 import timer from './Manager'
 import pkg from '../package.json'
+
+updateNotifier({pkg}).notify()
 
 module.exports = function createTimer (p) {
 
