@@ -2,6 +2,15 @@
   "name": "time-tracker-cli",
   "version": "1.0.10",
   "description": "Tiny time tracker",
+  "keywords":[
+      "time",
+      "tracker",
+      "timer",
+      "cli",
+      "time log",
+      "time logger",
+      "logger"
+  ],
   "bin": {
     "timer": "./bin/timer"
   },
@@ -16,7 +25,7 @@
     "type": "git",
     "url": "https://github.com/danibram/es6-seed-module"
   },
-  "author": "",
+  "author": "Daniel Biedma <info@dbr.io>",
   "license": "ISC",
   "devDependencies": {
     "babel": "^6.3.26",
