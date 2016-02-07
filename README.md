@@ -6,7 +6,7 @@
 
 ## Usage
 
-[![asciicast](https://asciinema.org/a/35678.png)](https://asciinema.org/a/35678)
+[![asciicast](https://asciinema.org/a/35774.png)](https://asciinema.org/a/35774)
 
 ```
 ±❩❩❩ timer --help
