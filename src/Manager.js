@@ -4,6 +4,8 @@ import moment from 'moment'
 import Configstore from 'configstore'
 import pkg from '../package.json'
 
+import {recognizeModifierTiming} from './Utils'
+
 export class Manager {
     constructor(cfg) {
         this.tasks = cfg.all.tasks
@@ -49,6 +51,29 @@ export class Manager {
         } else {
             return moment().diff(moment(t.start), 'seconds')
         }
+    }
+
+    modifyTask(operation, name, stringTime){
+        let t = this.getTask(name)
+
+        if (t.stop){
+
+            let newStop = moment(t.stop)
+            let parsed = recognizeModifierTiming(stringTime)
+            parsed.map((t)=>{
+                newStop = newStop[operation](t.value, t.momentKey)
+            })
+
+            if (operation === 'subtract' && newStop.isBefore(t.start)){
+                console.error('You cant subtract more time')
+                return
+            }
+
+            t.stop = newStop
+            this.setTask(name, t)
+        }
+
+        return t.stop
     }
 
     search(string) {
