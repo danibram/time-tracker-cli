@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/time-tracker-cli.png?downloads=true)](https://nodei.co/npm/time-tracker-cli/)
 
-[![Dependency Status](https://david-dm.org/danibram/timer-tracker-cli.svg)](https://david-dm.org/danibram/time-tracker-cli)
+[![Dependency Status](https://david-dm.org/danibram/time-tracker-cli.svg)](https://david-dm.org/danibram/time-tracker-cli)
 
 ## Usage
 
