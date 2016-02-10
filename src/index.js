@@ -4,7 +4,9 @@ import program from 'commander'
 import updateNotifier from 'update-notifier'
 
 import Task from './Task'
-import {humanParseDiff, sumarize} from './Output'
+import {sumarize} from './Output'
+import {humanParseDiff} from './Utils'
+
 import timer from './Manager'
 import pkg from '../package.json'
 
@@ -18,7 +20,7 @@ module.exports = function createTimer (p) {
 
         .option('-s, --start <task> <description>', 'Start the timer task.')
         .option('-f, --finish <task> <description>', 'Stops the timer task.')
-        .option('-d, --description <description>', 'Adds a descrpition for the task only in start/stop methods.')
+        .option('-d, --description <description>', 'Adds a description for the task only in start/stop methods.')
 
         .option('-a, --add <task> <timeString>', 'Adds time to a task. Example: "1h2m3s"')
         .option('--remove <task> <timeString>', 'Subtract time from a task. Example: "1h2m3s"')
@@ -28,6 +30,7 @@ module.exports = function createTimer (p) {
         .option('-e, --export', 'Prints the json of all tasks.')
         .parse(p.argv)
 
+    let description
     if (program.start){
         description = program.description || program.args[0]
         timer.start(program.start, description)

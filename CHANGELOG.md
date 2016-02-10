@@ -1,3 +1,7 @@
+## [v1.1.1] - Feb 9, 2016
+
+- Fixes
+
 ## [v1.1.0] - Feb 7, 2016
 
 - Added add/subtract time for/from a task.
@@ -8,3 +12,4 @@
 - Basic options. start, finish, log, report, export
 
 [v1.1.0]: https://github.com/danibram/time-tracker-cli/compare/v1.0.0...v1.1.0
+[v1.1.1]: https://github.com/danibram/time-tracker-cli/compare/v1.1.0...v1.1.1
