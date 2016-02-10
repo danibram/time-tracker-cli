@@ -11,6 +11,26 @@ export const recognizeModifierTiming = function (string){
     return res
 }
 
+export const calcRate = function (rate, total){
+    let amount
+    let mod = rate.substr(rate.length - 1)
+    let value = rate.slice(0, rate.length - 1)
+
+    switch (mod) {
+        case 'h':
+            amount = (total/60/60)*parseFloat(value)
+            break;
+        case 'm':
+            amount = (total/60)*parseFloat(value)
+            break;
+        case 's':
+            amount = total*parseFloat(value)
+            break;
+    }
+
+    return amount.toFixed(2)
+}
+
 export const humanParseDiff = function(secs) {
     let hours   = Math.floor(secs / 3600)
     let minutes = Math.floor((secs - (hours * 3600)) / 60)

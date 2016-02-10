@@ -1,9 +1,9 @@
 import moment from 'moment'
 import Table from 'cli-table'
 
-import {humanParseDiff} from './Utils'
+import {humanParseDiff, recognizeModifierTiming, calcRate} from './Utils'
 
-export const sumarize = function(search, tasks, full) {
+export const sumarize = function(search, tasks, rate, full) {
     let table = new Table({
         head: ['Duration', 'Dates', 'Task'],
         chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
@@ -36,6 +36,11 @@ export const sumarize = function(search, tasks, full) {
             { 'Search': ['\"' + search + '\"'] },
             { 'Total time': [humanParseDiff(total)] }
         )
+
+        if (rate){
+            table2.push({ 'Rate': [calcRate(rate, total)] })
+        }
+
         console.log(table2.toString());
     }
 }

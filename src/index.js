@@ -26,8 +26,9 @@ module.exports = function createTimer (p) {
         .option('--remove <task> <timeString>', 'Subtract time from a task. Example: "1h2m3s"')
 
         .option('-l, --log <task>', 'Logs the timer task.')
-        .option('-r, --report <task>', 'Report time of the tasks, searched by kay, you can report all using all as key.')
+        .option('-r, --report <task> <rate>', 'Report time of the tasks, searched by key, you can report all using all as key. Also you can pass a rate to calc an amount ex: 20h, calc the hours and mulpitly by 20')
         .option('-e, --export', 'Prints the json of all tasks.')
+
         .parse(p.argv)
 
     let description
@@ -50,7 +51,7 @@ module.exports = function createTimer (p) {
             process.stdout.write(`\r Task: ${program.log} ${humanParseDiff(timer.getTime(program.log))}`)
         }, 100)
     } else if (program.report){
-        sumarize(program.report, timer.search(program.report), true)
+        sumarize(program.report, timer.search(program.report), program.args[0], true)
     } else if (program.export){
         console.log(JSON.stringify(timer.getTasksJson(), null, 4))
     }

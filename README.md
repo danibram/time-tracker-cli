@@ -11,22 +11,22 @@
 ```
 ±❩❩❩ timer --help
 
-  Usage: timer [options]
+    Usage: timer [options]
 
-  Tiny time tracker for projects
+    Tiny time tracker for projects
 
-  Options:
+    Options:
 
-    -h, --help                         output usage information
-    -V, --version                      output the version number
-    -s, --start <task> <description>   Start the timer task.
-    -f, --finish <task> <description>  Stops the timer task.
-    -d, --description <description>    Adds a description for the task only in start/stop methods.
-    -a, --add <task> <timeString>      Adds time to a task. Example: "1h2m3s"
-    --remove <task> <timeString>       Subtract time from a task. Example: "1h2m3s"
-    -l, --log <task>                   Logs the timer task.
-    -r, --report <task>                Report time of the tasks, searched by kay, you can report all using all as key.
-    -e, --export                       Prints the json of all tasks.
+      -h, --help                         output usage information
+      -V, --version                      output the version number
+      -s, --start <task> <description>   Start the timer task.
+      -f, --finish <task> <description>  Stops the timer task.
+      -d, --description <description>    Adds a description for the task only in start/stop methods.
+      -a, --add <task> <timeString>      Adds time to a task. Example: "1h2m3s"
+      --remove <task> <timeString>       Subtract time from a task. Example: "1h2m3s"
+      -l, --log <task>                   Logs the timer task.
+      -r, --report <task> <rate>         Report time of the tasks, searched by key, you can report all using all as key. Also you can pass a rate to calc an amount ex: 20h, calc the hours and mulpitly by 20
+      -e, --export                       Prints the json of all tasks.
 ```
 
 - To start a task run:
