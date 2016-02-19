@@ -7,7 +7,7 @@
 
 ## Usage
 
-[![asciicast](https://asciinema.org/a/35774.png)](https://asciinema.org/a/35774)
+[![asciicast](https://asciinema.org/a/dzegwhnwxvv28q84u8uvsgyas.png)](https://asciinema.org/a/dzegwhnwxvv28q84u8uvsgyas)
 
 ```
 ±❩❩❩ timer --help
@@ -47,6 +47,34 @@ $ timer -h <key of the task> -d  <description>
 ```
 $ timer -l <key of the task>
 ```
+## How it works
+The data are stored inside ~/.config/time-tracker-cli.json
+If you open you should see: 
+
+```javascript
+{
+	"tasks": {
+		"work1.website.design": {
+			"start": "2016-02-19T10:00:36.393Z",
+			"stop": "2016-02-19T18:01:50.921Z"
+		},
+		"work1.website.deployServer": {
+			"start": "2016-02-19T10:01:59.116Z",
+			"stop": "2016-02-19T10:32:10.687Z"
+		},
+		"work1.api.develop.userController": {
+			"start": "2016-02-19T10:04:23.060Z",
+			"stop": "2016-02-19T20:04:36.836Z"
+		},
+		"work1.api.develop.loginController": {
+			"start": "2016-02-19T10:09:41.848Z",
+			"stop": "2016-02-19T13:11:54.059Z"
+		}
+	}
+}
+```
+
+The -r method, simply finds by regex and count the time.
 
 ## Development
 
