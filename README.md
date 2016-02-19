@@ -1,8 +1,9 @@
 # Tiny Time tracker
-
 [![NPM](https://nodei.co/npm/time-tracker-cli.png?downloads=true)](https://nodei.co/npm/time-tracker-cli/)
 
-[![Dependency Status](https://david-dm.org/danibram/time-tracker-cli.svg)](https://david-dm.org/danibram/time-tracker-cli)
+[![Dependency Status](https://david-dm.org/danibram/time-tracker-cli.svg?style=flat-square)](https://david-dm.org/danibram/time-tracker-cli)[![DevDependency Status](https://img.shields.io/david/dev/danibram/time-tracker-cli.svg?style=flat-square)][npm-home-module]
+
+[![Support link][paypal-badge]][paypal-link]
 
 ## Usage
 
@@ -51,3 +52,11 @@ $ timer -l <key of the task>
 
 Run ```npm install;npm run dev``` to watch the proyect, and compile the code automatically.
 Run ```npm build``` to build the module.
+
+## License
+Licensed under the MIT license. 2015
+
+
+[paypal-badge]: https://img.shields.io/badge/❤%20support-paypal-blue.svg?style=flat-square
+[paypal-link]: https://www.paypal.me/danibram
+[npm-home-module]: https://www.npmjs.com/package/time-tracker-cli
