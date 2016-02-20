@@ -28,7 +28,7 @@
       -a, --add <task> <timeString>      Adds time to a task. Example: "1h2m3s"
       --remove <task> <timeString>       Subtract time from a task. Example: "1h2m3s"
       -l, --log <task>                   Logs the timer task.
-      -r, --report <task> <rate>         Report time of the tasks, searched by key, you can report all using all as key. Also you can pass a rate to calc an amount ex: 20h, calc the hours and mulpitly by 20
+      -r, --report <task> <rate>         Report time of the tasks, searched by key, you can report all using all as key. Also you can pass a rate to calc an amount ex: 20h, calc the hours and multiply by 20
       -e, --export                       Prints the json of all tasks.
 ```
 
