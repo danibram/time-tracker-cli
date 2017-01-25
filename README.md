@@ -6,6 +6,17 @@
 [![Dependency Status](https://img.shields.io/bithound/dependencies/github/danibram/time-tracker-cli.svg?style=flat-square)](https://www.bithound.io/github/danibram/time-tracker-cli)
 [![Support link][paypal-badge]][paypal-link]
 
+## Installation
+
+```
+npm install -g time-tracker-cli
+```
+or
+```
+yarn global add time-tracker-cli
+```
+Now you can start to call `timer`command
+
 ## Usage
 
 [![asciicast](https://asciinema.org/a/100679.png)](https://asciinema.org/a/100679)
