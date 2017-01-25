@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../src/constants/index.js"],"names":[],"mappings":";;;;;AAAO,IAAM,kCAAa,aAAb;AACN,IAAM,kCAAa,aAAb;AACN,IAAM,8BAAW,UAAX","file":"index.js","sourcesContent":["export const notStarted = 'Not started'\nexport const inProgress = 'In progress'\nexport const finished = 'Finished'\n"]}
