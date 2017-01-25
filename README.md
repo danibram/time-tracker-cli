@@ -38,7 +38,7 @@ Usage: timer [options] [command]
 
     -h, --help     output usage information
     -V, --version  output the version number
-    --updateDB     Bool to update the db
+    --updateDB     Update the db if its neccesary
 ```
 
 - To start a task run:
@@ -114,6 +114,10 @@ If you open you should see:
     }
 }
 ```
+
+## Notes
+To use the autocomplete run `timer --setupCLI`
+If you have the version 1.x and you want to conserve the DB, run `timer --updateDB` to update the DB to version 2.x
 
 ## Development
 
