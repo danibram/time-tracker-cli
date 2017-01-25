@@ -4,13 +4,12 @@ import inquirer from 'inquirer'
 
 import Task from './Task'
 import { recognizeModifierTiming } from './utils'
-import { STARTED, PAUSED, UNPAUSED, IN_PROGRESS, FINISHED } from './constants'
+import { STARTED, PAUSED, UNPAUSED, IN_PROGRESS, FINISHED, configElements } from './constants'
 import { sumarize, outputVertical, cliError, cliSuccess } from './output'
 import { migrateToV2 } from './dbMigrations'
 
 export default class Manager {
 
-    configElements = ['format.output']
     repositories = ['tasks', 'config']
 
     constructor(cfg) {
@@ -152,7 +151,7 @@ export default class Manager {
 
     configure(element, value){
 
-        if (this.configElements.indexOf(element) < 0){
+        if (configElements.indexOf(element) < 0){
             return cliError(`Config key (${element}) not allowed, allowed keys: ${this.configElements.toString()} `)
         }
 

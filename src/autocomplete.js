@@ -1,4 +1,5 @@
 import omelette from 'omelette'
+import { configElements } from './core/constants'
 
 const autocomplete = function(config){
 
@@ -9,7 +10,7 @@ const autocomplete = function(config){
     }
 
     complete.on("cmd", function() {
-        this.reply(["start", "pause", "unpause", "finish", "description", "add", "subtract", "report", "log", "export", "delete"])
+        this.reply(["start", "pause", "unpause", "finish", "description", "add", "subtract", "report", "log", "export", "delete", "configuration", "configure"])
     });
 
     complete.on("key", function(cmd) {
@@ -17,6 +18,10 @@ const autocomplete = function(config){
 
         if (keyTasks.indexOf(cmd) > -1){
             this.reply(Object.keys(config.all.tasks));
+        }
+
+        if (cmd === 'configure' ){
+            this.reply(configElements);
         }
     });
 
