@@ -136,6 +136,7 @@ program
     .description('Remove tasks from the list. Empty for select all tasks')
     .alias('del')
     .action(function(string) {
+        string = (string) ? string : 'all'
         manager.delete(string)
         EXEC = true
     })
