@@ -1,5 +1,6 @@
 import moment from 'moment'
 import Table from 'cli-table'
+import chalk from 'chalk'
 
 import { humanParseDiff, calcRate } from './utils'
 
@@ -64,7 +65,9 @@ export const outputVertical = function (...args){
 }
 
 export const cliError = function(err) {
-    console.log('\x1b[31m'); // red
-    console.error(`Error: ${err}`)
-    console.log('\x1b[0m'); // end red
+    console.error(chalk.red(`Error: ${err}`))
+}
+
+export const cliSuccess = function(err) {
+    console.log(chalk.green(err))
 }

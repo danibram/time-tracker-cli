@@ -14,8 +14,7 @@ import autocomplete from './autocomplete'
 const config = new Configstore(pkg.name, {
     tasks:{},
     config:{
-        'format.output': 'DD/MM',
-        'config.version': '2'
+        'format.output': 'DD/MM'
     }
 })
 
@@ -30,6 +29,7 @@ let EXEC = false
 program
     .version(pkg.version)
     .description('Tiny time tracker for projects')
+    .option('--updateDB', 'Bool to update the db')
 
 program
     .command('start <task_key> [description]')
@@ -89,7 +89,7 @@ program
     })
 
 program
-    .command('remove <task_key> <stringTime>')
+    .command('subtract <task_key> <stringTime>')
     .description('Subtract time to a task. Example: "1h2m3s"')
     .alias('sub')
     .action(function(key, stringTime) {
@@ -99,7 +99,7 @@ program
     })
 
 program
-    .command('report [tasks] [rate]')
+    .command('report [task_string] [rate]')
     .description('Report time of the tasks, searched by key. Can pass a rate (1h).')
     .alias('r')
     .action(function(tasks, rate) {
@@ -107,8 +107,6 @@ program
         manager.sumarize(tasks, rate)
         EXEC = true
     })
-
-
 
 program
     .command('log <task_key>')
@@ -133,9 +131,24 @@ program
     })
 
 program
-    .parse(process.argv);
+    .command('delete [task_string]')
+    .description('Remove tasks from the list')
+    .alias('cl')
+    .action(function(string) {
+        manager.delete(string)
+        EXEC = true
+    })
 
-if (program.args.length === 0 || !EXEC) {
+program
+    .parse(process.argv)
+
+
+if (program.updateDB) {
+    manager.update()
+    EXEC = true
+}
+
+if (!EXEC) {
     cliError('You must use a valid command.')
     program.outputHelp()
     process.exit(1)

@@ -9,7 +9,7 @@ const autocomplete = function(config){
     }
 
     complete.on("cmd", function() {
-        this.reply(["start", "pause", "unpause", "finish", "description", "add", "remove", "report", "log", "export"])
+        this.reply(["start", "pause", "unpause", "finish", "description", "add", "subtract", "report", "log", "export", "delete"])
     });
 
     complete.on("key", function(cmd) {

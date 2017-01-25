@@ -1,11 +1,12 @@
 import flat from 'flat'
+import moment from 'moment'
+import inquirer from 'inquirer'
 
 import Task from './Task'
-import moment from 'moment'
-
 import { recognizeModifierTiming } from './utils'
 import { STARTED, PAUSED, UNPAUSED, IN_PROGRESS, FINISHED } from './constants'
-import { sumarize, outputVertical, cliError } from './output'
+import { sumarize, outputVertical, cliError, cliSuccess } from './output'
+import { migrateToV2 } from './dbMigrations'
 
 export default class Manager {
 
@@ -16,17 +17,6 @@ export default class Manager {
         this.cfg = cfg
         this.tasks = cfg.all.tasks
         this.config = (cfg.all.config) ? cfg.all.config : {}
-
-        if (!this.config['config.version']){
-            this.migrateToV2(this.tasks)
-                .then((migratedTasks)=>{
-                    this.cfg.set('tasks', migratedTasks)
-                    this.cfg.set('config', Object.assign(this.config, {
-                        'config.version': 2
-                    }))
-                }, cliError)
-                .catch(cliError)
-        }
     }
 
     getTask(key) {
@@ -123,6 +113,35 @@ export default class Manager {
         return tasks
     }
 
+    delete(string) {
+        let tasks = this.search(string)
+
+        console.log(
+            tasks.map(k => `${k.name} \n`).join('')
+        )
+
+        if (tasks.length === 0) {
+            cliSuccess('No tasks found to delete.')
+            return
+        }
+
+        inquirer.prompt([{
+            type: 'confirm',
+            name: 'cls',
+            message: `Are you sure you want to delete this tasks?`,
+            default: false
+        }]).then((answers) => {
+            if (answers.cls){
+                tasks.forEach(k => {
+                    delete this.tasks[k.name]
+                    this.cfg.set('tasks', this.tasks)
+                })
+                cliSuccess('Tasks deleted.')
+            }
+        })
+        .catch(cliError)
+    }
+
     getTasksJson() {
         return flat.unflatten(this.tasks)
     }
@@ -147,29 +166,28 @@ export default class Manager {
         return this.config
     }
 
-    migrateToV2(tasks){
-        return new Promise((resolve, reject)=>{
-            Object.keys(tasks).forEach(k => {
-                if (!tasks[k].timings){
-                    reject('Config migrated')
-                }
+    update() {
+        if (!this.config || (this.config && this.config['config.version'] !== '2') ){
+            console.log('DB: Need to be updated')
 
-                if (!tasks[k].start && !tasks[k].stop){
-                    reject('Config corrupted or migrated')
-                }
+            migrateToV2(this.tasks)
+                .then(tasks => {
+                    let newTasks = {}
+                    tasks.forEach(t => newTasks[t.key] = t.task)
+                    return newTasks
+                })
+                .then(migratedTasks => {
+                    this.cfg.set('tasks', migratedTasks)
+                    this.cfg.set('config', Object.assign(this.config, {
+                        'config.version': '2'
+                    }))
 
-                tasks[k].timings = [{
-                    start: (tasks[k].start) ? tasks[k].start : null,
-                    stop: (tasks[k].stop) ? tasks[k].stop : null
-                }]
-
-                delete tasks[k].start
-                delete tasks[k].stop
-            })
-
-            resolve(tasks)
-        })
-
+                    cliSuccess('Configuration migrated to version 2.')
+                }, cliError)
+                .catch(cliError)
+        } else {
+            cliSuccess('No need to update the DB.')
+        }
     }
 
     sumarize(key, rate, full=true){
