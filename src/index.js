@@ -7,7 +7,7 @@ import pkg from '../package.json'
 
 import Manager from './core/Manager'
 import { humanParseDiff } from './core/utils'
-import { outputVertical, cliError } from './core/output'
+import { outputVertical, cliError, outputConfig } from './core/output'
 
 import autocomplete from './autocomplete'
 
@@ -65,6 +65,7 @@ program
     .description('Stop task, you can add a description')
     .alias('f')
     .action(function(key, description) {
+        description = (description) ? Array.isArray(description) ? description.join(' ') : description : null
         manager.stopTask(key, description)
         EXEC = true
     })
@@ -136,6 +137,22 @@ program
     .alias('del')
     .action(function(string) {
         manager.delete(string)
+        EXEC = true
+    })
+
+program
+    .command('configure <key> <value>')
+    .description('Configure the value of the config passing a key')
+    .action(function(key, value) {
+        manager.configure(key, value)
+        EXEC = true
+    })
+
+program
+    .command('configuration')
+    .description('Output configuration')
+    .action(function(string) {
+        outputConfig(manager.getConfig())
         EXEC = true
     })
 
