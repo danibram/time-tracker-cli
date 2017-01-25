@@ -100,7 +100,7 @@ program
 
 program
     .command('report [task_string] [rate]')
-    .description('Report time of the tasks, searched by key. Can pass a rate (1h).')
+    .description('Report time of the tasks, empty for select all tasks. Can pass a rate (1h).')
     .alias('r')
     .action(function(tasks, rate) {
         tasks = (tasks) ? tasks : 'all'
@@ -132,8 +132,8 @@ program
 
 program
     .command('delete [task_string]')
-    .description('Remove tasks from the list')
-    .alias('cl')
+    .description('Remove tasks from the list. Empty for select all tasks')
+    .alias('del')
     .action(function(string) {
         manager.delete(string)
         EXEC = true
