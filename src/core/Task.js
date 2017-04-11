@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 import { STARTED, PAUSED, IN_PROGRESS, FINISHED } from './constants'
-import { recognizeModifierTiming } from './Utils'
+import { recognizeModifierTiming } from './utils'
 import { cliError } from './output'
 
 
