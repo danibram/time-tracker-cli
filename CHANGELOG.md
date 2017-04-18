@@ -1,3 +1,8 @@
+## [v2.0.2] - Apr 18, 2017
+
+- Update dependencies
+- Fix typo (Thanks @RyanZim)
+
 ## [v2.0.0] - Jan 25, 2017
 
 - Internal Rework, now you use commands in a git style
