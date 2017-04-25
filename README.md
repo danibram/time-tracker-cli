@@ -1,4 +1,6 @@
 # Tiny Time tracker
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/danibram/time-tracker-cli.svg)](https://greenkeeper.io/)
 [![NPM](https://nodei.co/npm/time-tracker-cli.png?downloads=true)][npm-home-module]
 
 [![npm version](https://img.shields.io/npm/v/time-tracker-cli.svg?style=flat-square)](https://github.com/danibram/time-tracker-cli)
