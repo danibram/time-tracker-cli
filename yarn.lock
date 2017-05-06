@@ -1604,9 +1604,9 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-omelette@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/omelette/-/omelette-0.3.2.tgz#68c1b3c57ced778b4e67d8637d2559b2c1b3ec26"
+omelette@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/omelette/-/omelette-0.4.0.tgz#2401df7d32abda575d17bac652e57487d3b1150d"
 
 once@^1.3.0, once@^1.3.3:
   version "1.4.0"
