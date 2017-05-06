@@ -1,34 +1,38 @@
 import omelette from 'omelette'
 import { configElements } from './core/constants'
 
-const autocomplete = function(config){
+import pkg from '../package.json'
+import Configstore from 'configstore'
 
-    const complete = omelette("timer <cmd> <key>")
-
-    let allTaskKeys = function() {
-        this.reply(Object.keys(config.all.tasks));
+const config = new Configstore(pkg.name, {
+    tasks:{},
+    config:{
+        'format.output': 'DD/MM'
     }
+})
 
-    complete.on("cmd", function() {
-        this.reply(["start", "pause", "unpause", "finish", "description", "add", "subtract", "report", "log", "export", "delete", "configuration", "configure"])
-    });
-
-    complete.on("key", function(cmd) {
+const autocomplete = function(){
+    let key = ({reply, before}) => {
         let keyTasks = ['start', 'pause', 'unpause', 'finish', 'log', 'description', 'add', 'remove']
 
-        if (keyTasks.indexOf(cmd) > -1){
-            this.reply(Object.keys(config.all.tasks));
+        if (keyTasks.indexOf(before) > -1){
+            reply(Object.keys(config.all.tasks))
         }
 
-        if (cmd === 'configure' ){
-            this.reply(configElements);
+        if (before === 'configure' ){
+            reply(configElements)
         }
-    });
+    }
 
-    complete.init();
+    const complete = omelette`
+        timer
+        ${["start", "pause", "unpause", "finish", "description", "add", "subtract", "report", "log", "export", "delete", "configuration", "configure"]}
+        ${key}
+    `
+    complete.init()
 
     if (~process.argv.indexOf('--setupCLI')) {
-        complete.setupShellInitFile();
+        complete.setupShellInitFile()
     }
 
 }

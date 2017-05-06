@@ -21,7 +21,7 @@ const config = new Configstore(pkg.name, {
 updateNotifier({ pkg }).notify()
 
 const manager = new Manager(config)
-autocomplete(config)
+autocomplete()
 
 //Exec
 let EXEC = false
