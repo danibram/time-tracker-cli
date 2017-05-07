@@ -1,26 +1,18 @@
 import omelette from 'omelette'
 import { configElements } from './core/constants'
 
-import pkg from '../package.json'
-import Configstore from 'configstore'
+const autocomplete = function(config){
+    const tasks = Object.keys(config.all.tasks)
 
-const config = new Configstore(pkg.name, {
-    tasks:{},
-    config:{
-        'format.output': 'DD/MM'
-    }
-})
-
-const autocomplete = function(){
-    let key = ({reply, before}) => {
+    let key = ({before}) => {
         let keyTasks = ['start', 'pause', 'unpause', 'finish', 'log', 'description', 'add', 'remove']
 
         if (keyTasks.indexOf(before) > -1){
-            reply(Object.keys(config.all.tasks))
+            return tasks
         }
 
         if (before === 'configure' ){
-            reply(configElements)
+            return configElements
         }
     }
 
