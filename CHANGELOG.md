@@ -1,8 +1,10 @@
-## [v2.0.14] - Apr 18, 2017
+## [v2.0.22] - Apr 18, 2017
 
 - Update dependencies
 - Fix typo (Thanks @RyanZim)
 - Fix autocomplete
+- Add command to install completions
+- Only completion for commands not for tasks
 
 ## [v2.0.0] - Jan 25, 2017
 
@@ -33,4 +35,4 @@
 [v1.1.1]: https://github.com/danibram/time-tracker-cli/compare/v1.1.0...v1.1.1
 [v1.1.2]: https://github.com/danibram/time-tracker-cli/compare/v1.1.1...v1.1.2
 [v2.0.0]: https://github.com/danibram/time-tracker-cli/compare/v1.1.2...v2.0.0
-[v2.0.14]: https://github.com/danibram/time-tracker-cli/compare/v2.0.0...v2.0.14
+[v2.0.22]: https://github.com/danibram/time-tracker-cli/compare/v2.0.0...v2.0.22
