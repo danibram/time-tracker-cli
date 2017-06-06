@@ -45,6 +45,6 @@
     "inquirer": "^3.0.1",
     "moment": "^2.11.2",
     "omelette": "^0.4.4",
-    "update-notifier": "^2.1.0"
+    "update-notifier": "2.1.0"
   }
 }
