@@ -42,12 +42,21 @@ export const sumarize = function(search, tasks, rate, full, format) {
 
     if (full){
         table.push([])
-        table.push(
-            [{ rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center'}, colors.red('Total time'), humanParseDiff(total)]
-        )
 
         if (rate){
-            table.push([ colors.red('Rate'), calcRate(rate, total)])
+            table.push(
+                [{ rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center'}, colors.red('Total time'), humanParseDiff(total)],
+                [ colors.red('Rate'), calcRate(rate, total)]
+            )
+        } else {
+            table.push(
+                [
+                    { rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center' },
+                    { rowSpan:2, content: colors.red('Total time'), vAlign:'center' },
+                    { rowSpan:2, content: humanParseDiff(total), vAlign:'center' }
+                ],
+                []
+            )
         }
     }
 

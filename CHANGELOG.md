@@ -1,3 +1,9 @@
+## [v2.2.0] - Sep 5, 2017
+
+- Update output
+- Update all deps to last version
+- Fix output v2.1 error
+
 ## [v2.0.22] - Apr 18, 2017
 
 - Update dependencies
