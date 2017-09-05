@@ -41,7 +41,7 @@
     "cli-table": "^0.3.1",
     "commander": "^2.9.0",
     "configstore": "^3.1.0",
-    "flat": "^2.0.0",
+    "flat": "^3.0.0",
     "inquirer": "^3.0.1",
     "moment": "^2.11.2",
     "omelette": "^0.4.4",
