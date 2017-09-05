@@ -1,50 +1,76 @@
 import moment from 'moment'
-import Table from 'cli-table'
-import chalk from 'chalk'
+import Table from 'cli-table2'
+import colors from 'colors'
 
 import { humanParseDiff, calcRate } from './utils'
 
 export const sumarize = function(search, tasks, rate, full, format) {
     let table = new Table({
         head: ['Duration', 'Dates', 'Task'],
-        chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
         colAligns: ['right', 'center', 'left'],
+        chars: {
+            'top': '═'
+            , 'top-mid': '╤'
+            , 'top-left': '╔'
+            , 'top-right': '╗'
+            , 'bottom': '═'
+            , 'bottom-mid': '╧'
+            , 'bottom-left': '╚'
+            , 'bottom-right': '╝'
+            , 'left': '║'
+            , 'left-mid': '╟'
+            , 'right': '║'
+            , 'right-mid': '╢'
+          },
         style: { head: ['green'] }
     });
     let total = 0
     let head= `Search: ${search} \n`
 
     tasks.forEach((task, index) => {
-        let name = task.name
         task = task.task
 
         let duration = task.getSeconds()
         total += duration
 
-        table.push([humanParseDiff(duration), moment(task.getStartDate()).format(format), name])
+        let description = (task.description() && task.description() !== '')
+            ? task.description()
+            : task.name
+
+        table.push([description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
     })
 
-    console.log(table.toString());
-
     if (full){
-        let table2 = new Table()
-        table2.push(
-            { 'Search': ['\"' + search + '\"'] },
-            { 'Total time': [humanParseDiff(total)] }
+        table.push([])
+        table.push(
+            [{ rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center'}, colors.red('Total time'), humanParseDiff(total)]
         )
 
         if (rate){
-            table2.push({ 'Rate': [calcRate(rate, total)] })
+            table.push([ colors.red('Rate'), calcRate(rate, total)])
         }
-
-        console.log(table2.toString());
     }
+
+    console.log(table.toString());
 }
 
 export const outputConfig = function (config){
     let table = new Table({
         head: ['Key', 'value'],
-        chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
+        chars: {
+            'top': '═'
+            , 'top-mid': '╤'
+            , 'top-left': '╔'
+            , 'top-right': '╗'
+            , 'bottom': '═'
+            , 'bottom-mid': '╧'
+            , 'bottom-left': '╚'
+            , 'bottom-right': '╝'
+            , 'left': '║'
+            , 'left-mid': '╟'
+            , 'right': '║'
+            , 'right-mid': '╢'
+        },
         colAligns: ['center', 'center'],
         style: { head: ['green'] }
     });
@@ -65,9 +91,9 @@ export const outputVertical = function (...args){
 }
 
 export const cliError = function(err) {
-    console.error(chalk.red(`Error: ${err}`))
+    console.error(colors.red(`Error: ${err}`))
 }
 
 export const cliSuccess = function(err) {
-    console.log(chalk.green(err))
+    console.log(colors.green(err))
 }

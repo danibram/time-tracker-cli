@@ -125,6 +125,10 @@ export default class Task {
         this.task.log.push(`${operation}#${moment().toISOString()}`)
     }
 
+    description(){
+        return this.task.description
+    }
+
     setDescription(text){
         this.task.description = (text) ? text : (this.task.description) ? this.task.description : ''
     }
