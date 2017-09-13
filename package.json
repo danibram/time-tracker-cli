@@ -1,6 +1,6 @@
 {
   "name": "time-tracker-cli",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Tiny time tracker",
   "keywords": [
     "time",
@@ -14,7 +14,7 @@
   "bin": {
     "timer": "./bin/timer"
   },
-  "main": "./lib",
+  "main": "./lib/exports",
   "scripts": {
     "build": "node_modules/.bin/babel -s -d lib src",
     "dev": "npm run build -- -w",

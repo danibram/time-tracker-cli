@@ -1,3 +1,7 @@
+## [v2.3.0] - Sep 14, 2017
+
+- Add a manager export point
+
 ## [v2.2.0] - Sep 5, 2017
 
 - Update output
@@ -42,3 +46,5 @@
 [v1.1.2]: https://github.com/danibram/time-tracker-cli/compare/v1.1.1...v1.1.2
 [v2.0.0]: https://github.com/danibram/time-tracker-cli/compare/v1.1.2...v2.0.0
 [v2.0.22]: https://github.com/danibram/time-tracker-cli/compare/v2.0.0...v2.0.22
+[v2.2.0]: https://github.com/danibram/time-tracker-cli/compare/v2.0.22...v2.2.0
+[v2.3.0]: https://github.com/danibram/time-tracker-cli/compare/v2.2.0...v2.3.0
