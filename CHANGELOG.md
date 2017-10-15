@@ -1,3 +1,7 @@
+## [v2.3.1] - Sep 14, 2017
+
+- Update dependencies
+
 ## [v2.3.0] - Sep 14, 2017
 
 - Add a manager export point
