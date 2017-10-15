@@ -1,6 +1,6 @@
 {
   "name": "time-tracker-cli",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Tiny time tracker",
   "keywords": [
     "time",
@@ -42,9 +42,9 @@
     "commander": "^2.11.0",
     "configstore": "^3.1.1",
     "flat": "^4.0.0",
-    "inquirer": "^3.2.3",
-    "moment": "^2.11.2",
-    "omelette": "^0.4.4",
-    "update-notifier": "^2.2.0"
+    "inquirer": "^3.3.0",
+    "moment": "^2.19.1",
+    "omelette": "^0.4.5",
+    "update-notifier": "^2.3.0"
   }
 }
