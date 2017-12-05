@@ -141,9 +141,44 @@ export default class Manager {
         .catch(cliError)
     }
 
-    getTasksJson() {
-        return flat.unflatten(this.tasks)
+    getTasksJson(key) {
+        return flat.unflatten(key ? this.tasks[key]: this.tasks)
     }
+
+	getTasksMd(key) {
+		let timings = this.tasks[key].timings
+		let body = 	"| Start | End | Hours | Subtotal |\n"
+		body += 	"| -----  | --- | -----:| -------: |\n"
+		let total = 0;
+		timings.forEach( k => {
+			let start = new Date(k.start)
+			let stop = new Date(k.stop)
+			total += stop - start
+			body += "|" + this.dateFormat(start)+ "|" + this.dateFormat(stop)+ "|"+ this.hourFormat(stop - start)+ "|"+ this.hourFormat(total)+ "|\n"
+		})
+		body += 	"| | |\n"
+		body += 	"| Total | | " + this.hourFormat(total)+ " | |\n"
+
+        return body
+    }
+
+	dateFormat(d){
+		let date = d.getFullYear() + "/"
+		let twoDigits = n => n < 10 ? "0" + n : n
+		date += twoDigits(d.getMonth()+1) + "/"
+		date += twoDigits(d.getDate()) + " "
+		date += twoDigits(d.getHours()) + "&#58;"
+		date += twoDigits(d.getMinutes()) + "&#58;"
+		date += twoDigits(d.getSeconds())
+		return date
+	}
+
+	hourFormat(d){
+		let date = new Date(d)
+		let twoDigits = n => n < 10 ? "0" + n : n
+
+		return Math.round(d / 36e5) + "&#58;" + twoDigits(date.getMinutes()) + "&#58;" + twoDigits(date.getSeconds())
+	}
 
     getConfig(){
         return this.config
