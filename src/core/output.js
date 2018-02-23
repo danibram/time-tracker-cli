@@ -6,7 +6,7 @@ import { humanParseDiff, calcRate } from './utils'
 
 export const sumarize = function(search, tasks, rate, full, format) {
     let table = new Table({
-        head: ['Duration', 'Dates', 'Task'],
+        head: ['Task', 'Dates', 'Duration'],
         colAligns: ['right', 'center', 'left'],
         chars: {
             'top': '═'
@@ -28,14 +28,13 @@ export const sumarize = function(search, tasks, rate, full, format) {
     let head= `Search: ${search} \n`
 
     tasks.forEach((task, index) => {
+		let description = (task.task.description() && task.task.description() !== '')
+		? task.task.description()
+		: task.name
         task = task.task
 
         let duration = task.getSeconds()
         total += duration
-
-        let description = (task.description() && task.description() !== '')
-            ? task.description()
-            : task.name
 
         table.push([description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
     })
