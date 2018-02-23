@@ -124,11 +124,11 @@ program
 
 program
     .command('export [task_string]')
-    .description('Export the tasks in a JSON')
+    .description('Export the tasks in json (default) or md format')
     .alias('e')
     .option('-f --format [format]')
-    .option('-s --start [start date]')
-    .option('-e --end [end date]')
+    .option('-s --start [start date. Example: "2017/05/28"]')
+    .option('-e --end [end date. Example: "2018/05/28"]')
     .action(function(key, options) {
 		switch (options.format ? options.format.toLowerCase() : undefined){
 			case "json": case undefined:

@@ -145,22 +145,65 @@ export default class Manager {
         return flat.unflatten(key ? this.tasks[key]: this.tasks)
     }
 
-	getTasksMd(key) {
-		let timings = this.tasks[key].timings
-		let body = 	"| Start | End | Hours | Subtotal |\n"
-		body += 	"| -----  | --- | -----:| -------: |\n"
+	getTasksMd(key, start, end) {
+		let timings
+		if(key){
+			timings = this.tasks[key].timings
+		}else{
+			timings = this.unflatTasks(this.tasks)
+		}
+		let body = 	"| Start | End | Hours | Subtotal | Description |\n"
+		body += 	"| ----- | --- | -----:| -------: | ----------- | \n"
 		let total = 0;
+
+		timings = start || end ? this.filterDates(timings, start, end) : timings
 		timings.forEach( k => {
 			let start = new Date(k.start)
 			let stop = new Date(k.stop)
 			total += stop - start
-			body += "|" + this.dateFormat(start)+ "|" + this.dateFormat(stop)+ "|"+ this.hourFormat(stop - start)+ "|"+ this.hourFormat(total)+ "|\n"
+			body += "|" + this.dateFormat(start)+ "|" + this.dateFormat(stop)+ "|"+ this.hourFormat(stop - start)+ "|"+ this.hourFormat(total)+ "|" + k.name+ "|\n"
 		})
-		body += 	"| | |\n"
-		body += 	"| Total | | " + this.hourFormat(total)+ " | |\n"
+		body += 	"| | | |\n"
+		body += 	"| Total | | " + this.hourFormat(total)+ " | | |\n"
 
         return body
     }
+
+	filterDates(timings, start, end){
+		let filterStart = function(timings){
+			let filtered = []
+			for(let i = 0; i < timings.length; i++){
+				if(new Date(start) < new Date(timings[i].start)){
+					filtered.push(timings[i])
+				}
+			}
+			return filtered
+		}
+		let filterEnd = function(timings){
+			let filtered = []
+			for(let i = 0; i < timings.length; i++){
+				if(new Date(end) > new Date(timings[i].start)){
+					filtered.push(timings[i])
+				}
+			}
+			return filtered
+		}
+
+		return start && end ? filterStart(filterEnd(timings)) : (start ? filterStart(timings) : filterEnd(timings))
+	}
+	unflatTasks(tasks){
+		let keys = Object.keys(tasks)
+		let unflattened = []
+		for(let i1 = 0; i1 < keys.length; i1++){
+			for(let i2 = 0; i2 < tasks[keys[i1]].timings.length; i2++){
+				let timing = tasks[keys[i1]].timings[i2]
+				timing.name = keys[i1]
+				timing.description = tasks[keys[i1]].description
+				unflattened.push(timing)
+			}
+		}
+		return unflattened
+	}
 
 	dateFormat(d){
 		let date = d.getFullYear() + "/"
