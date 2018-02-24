@@ -269,6 +269,7 @@ export default class Manager {
 
     sumarize(key, rate, full=true){
         let tasks = this.search(key)
+        tasks.sort((a,b) => { return a.name > b.name })
         sumarize(key, tasks, rate, full, this.config['format.output'])
     }
 }

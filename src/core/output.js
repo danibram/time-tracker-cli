@@ -6,8 +6,8 @@ import { humanParseDiff, calcRate } from './utils'
 
 export const sumarize = function(search, tasks, rate, full, format) {
     let table = new Table({
-        head: ['Task', 'Dates', 'Duration'],
-        colAligns: ['right', 'center', 'left'],
+        head: ['Name','Description', 'Dates', 'Duration'],
+        colAligns: ['left', 'center', 'center', 'left'],
         chars: {
             'top': '═'
             , 'top-mid': '╤'
@@ -30,13 +30,31 @@ export const sumarize = function(search, tasks, rate, full, format) {
     tasks.forEach((task, index) => {
 		let description = (task.task.description() && task.task.description() !== '')
 		? task.task.description()
-		: task.name
+		: '-'
+        let name = task.name
         task = task.task
 
         let duration = task.getSeconds()
         total += duration
 
-        table.push([description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
+        // Avoid excesive width for proper console fit
+        let splitWidth = function(str, len){
+            let arr = []
+            while (str != '') {
+                if (str.length > len) {
+                    arr.push(str.substring(0,len))
+                    str = str.substring(len);
+                } else {
+                    arr.push(str)
+                    break
+                }
+            }
+            return arr.join('\n')
+        }
+        description = splitWidth(description, 51)
+        name = splitWidth(name, 40)
+
+        table.push([name, description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
     })
 
     if (full){
@@ -51,6 +69,7 @@ export const sumarize = function(search, tasks, rate, full, format) {
             table.push(
                 [
                     { rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center' },
+                    { rowSpan:2, content: '', vAlign:'center' },
                     { rowSpan:2, content: colors.red('Total time'), vAlign:'center' },
                     { rowSpan:2, content: humanParseDiff(total), vAlign:'center' }
                 ],
