@@ -153,13 +153,13 @@ export default class Manager {
 			timings = this.unflatTasks(this.tasks)
 		}
 		let body = 	"| Start | End | Hours | Subtotal | Description |\n"
-		body += 	"| ----- | --- | -----:| -------: | ----------- | \n"
+		body += 	"| ----- | --- | -----:| -------: | ----------- |\n"
 		let total = 0;
 
 		timings = start || end ? this.filterDates(timings, start, end) : timings
 		timings.forEach( k => {
 			let start = new Date(k.start)
-			let stop = new Date(k.stop)
+			let stop = k.stop ? new Date(k.stop) : new Date()
 			total += stop - start
 			body += "|" + this.dateFormat(start)+ "|" + this.dateFormat(stop)+ "|"+ this.hourFormat(stop - start)+ "|"+ this.hourFormat(total)+ "|" + k.name+ "|\n"
 		})
@@ -219,8 +219,7 @@ export default class Manager {
 	hourFormat(d){
 		let date = new Date(d)
 		let twoDigits = n => n < 10 ? "0" + n : n
-
-		return Math.round(d / 36e5) + "&#58;" + twoDigits(date.getMinutes()) + "&#58;" + twoDigits(date.getSeconds())
+		return Math.floor(d / 36e5) + "&#58;" + twoDigits(date.getMinutes()) + "&#58;" + twoDigits(date.getSeconds())
 	}
 
     getConfig(){
