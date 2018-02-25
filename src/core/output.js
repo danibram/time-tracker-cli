@@ -38,7 +38,7 @@ export const sumarize = function(search, tasks, rate, full, format) {
         total += duration
 
         // Avoid excesive width for proper console fit
-        let splitWidth = function(str, len){
+        let splitWidth = (str, len) => {
             let arr = []
             while (str != '') {
                 if (str.length > len) {
