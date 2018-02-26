@@ -1,45 +1,40 @@
 import moment from 'moment'
 
 import { STARTED, PAUSED, IN_PROGRESS, FINISHED } from './constants'
-import { recognizeModifierTiming } from './utils'
+import { recognizeModifierTiming, inPeriod, getSeconds } from './utils'
 import { cliError } from './output'
-
+import { EINPROGRESS } from 'constants'
 
 export default class Task {
-    constructor(task){
-        this.task = (task) ? task : {
-            description: '',
-            timings: []
-        }
+    constructor(task) {
+        this.task = task
+            ? task
+            : {
+                  description: '',
+                  timings: []
+              }
+        this.filtered = false
     }
 
-    _calcTime(t){
-        if (t.stop) {
-            return moment(t.stop).diff(moment(t.start), 'seconds')
-        } else {
-            return moment().diff(moment(t.start), 'seconds')
-        }
-    }
-
-    _modifyTiming(time, operation){
+    _modifyTiming(time, operation) {
         let timing = this.task.timings[this.task.timings.length - 1]
-        if (!timing){
-            throw (`This task is not started, start it.`)
+        if (!timing) {
+            throw `This task is not started, start it.`
         }
 
         let newStop = moment(timing.stop)
         newStop = newStop[operation](time.value, time.momentKey)
 
-        if (operation === 'subtract' && newStop.isBefore(timing.start)){
-            throw('You cant subtract more time')
+        if (operation === 'subtract' && newStop.isBefore(timing.start)) {
+            throw 'You cant subtract more time'
             return
         }
 
         this.task.timings[this.task.timings.length - 1].stop = newStop
     }
 
-    start(description){
-        return new Promise((resolve, reject)=>{
+    start(description) {
+        return new Promise((resolve, reject) => {
             let started = false
 
             let timing = this.task.timings[this.task.timings.length - 1]
@@ -59,11 +54,11 @@ export default class Task {
         })
     }
 
-    pause(){
-        return new Promise((resolve, reject)=>{
+    pause() {
+        return new Promise((resolve, reject) => {
             let timing = this.task.timings[this.task.timings.length - 1]
 
-            if (!timing){
+            if (!timing) {
                 reject(this.error(`This task is not started, start it.`))
             }
 
@@ -71,17 +66,19 @@ export default class Task {
                 reject(this.error(`This task are ended/paused, unpaused it.`))
             }
 
-            this.task.timings[this.task.timings.length - 1].stop = moment().toDate()
+            this.task.timings[
+                this.task.timings.length - 1
+            ].stop = moment().toDate()
             this.setStatus(PAUSED)
             this.log('pause')
             resolve()
         })
     }
 
-    unpause(){
-        return new Promise((resolve, reject)=>{
+    unpause() {
+        return new Promise((resolve, reject) => {
             let timing = this.task.timings[this.task.timings.length - 1]
-            if (!timing){
+            if (!timing) {
                 reject(this.error(`This task is not started, start it`))
             }
 
@@ -98,10 +95,10 @@ export default class Task {
         })
     }
 
-    stop (description){
-        return new Promise((resolve, reject)=>{
+    stop(description) {
+        return new Promise((resolve, reject) => {
             let timing = this.task.timings[this.task.timings.length - 1]
-            if (!timing || timing && !timing.start){
+            if (!timing || (timing && !timing.start)) {
                 reject(this.error(`This task is not started, start it`))
             }
 
@@ -109,7 +106,9 @@ export default class Task {
                 reject(this.error(`This task already ended, start/unpause it.`))
             }
 
-            this.task.timings[this.task.timings.length - 1].stop = moment().toDate()
+            this.task.timings[
+                this.task.timings.length - 1
+            ].stop = moment().toDate()
             this.setDescription(description)
             this.setStatus(FINISHED)
             this.log('stop')
@@ -117,23 +116,25 @@ export default class Task {
         })
     }
 
-    log(operation){
-        if (!this.task.log){
+    log(operation) {
+        if (!this.task.log) {
             this.task.log = []
         }
 
         this.task.log.push(`${operation}#${moment().toISOString()}`)
     }
 
-    description(){
+    description() {
         return this.task.description
     }
 
-    setDescription(text){
-        this.task.description = (text) ? text : (this.task.description) ? this.task.description : ''
+    setDescription(text) {
+        this.task.description = text
+            ? text
+            : this.task.description ? this.task.description : ''
     }
 
-    setStatus(status){
+    setStatus(status) {
         this.task.status = status
     }
 
@@ -142,10 +143,10 @@ export default class Task {
             let parsed = recognizeModifierTiming(stringTime)
 
             try {
-                parsed.map((t)=>{
+                parsed.map(t => {
                     this._modifyTiming(t, operation)
                 })
-            } catch(err){
+            } catch (err) {
                 console.error(err)
                 reject(this.error(`Error trying to ${operation} time to task`))
             }
@@ -155,33 +156,84 @@ export default class Task {
         })
     }
 
-    get(){
+    get() {
         return this.task
     }
 
-    getSeconds(){
+    filterByDates(start, end) {
+        if (this.task.timings) {
+            if (start && end) {
+                this.task.timings = this._filterTimingsByDate(start, end)
+            } else if (start) {
+                end = moment().format('YYYY/MM/DD')
+                this.task.timings = this._filterTimingsByDate(start, end)
+            } else if (end) {
+                start = moment(0).format('YYYY/MM/DD')
+                this.task.timings = this._filterTimingsByDate(start, end)
+            }
+
+            if (this.task.timings.length === 0) {
+                this.filtered = true
+            }
+        } else {
+            let t = inPeriod(this.task.start, this.task.stop, start, end)
+            if (t.isBetween) {
+                this.task.start = t.start
+                this.task.stop = t.stop
+            } else {
+                this.filtered = true
+            }
+        }
+
+        return this
+    }
+
+    _filterTimingsByDate(start, end) {
+        return this.task.timings.reduce((acc, val) => {
+            let t = inPeriod(val.start, val.stop, start, end)
+            if (t.isBetween) {
+                acc.push({
+                    start: t.start,
+                    stop: t.stop
+                })
+            }
+            return acc
+        }, [])
+    }
+
+    getSeconds() {
         let duration = 0
 
-        if (this.task.timings){
+        if (this.task.timings) {
             this.task.timings.forEach(timing => {
-                duration += this._calcTime(timing)
+                duration += getSeconds(timing)
             })
         } else {
-            duration = this._calcTime(this.task)
+            duration = getSeconds(this.task)
         }
 
         return duration
     }
 
-    getStartDate(){
-        if (this.task.timings && this.task.timings[0]){
+    getStartDate() {
+        if (this.task.timings && this.task.timings[0]) {
             return this.task.timings[0].start
         } else {
             return this.task.start
         }
     }
 
-    error(err){
+    getEndDate() {
+        if (this.task.timings) {
+            return this.task.timings[this.task.timings.length - 1].stop
+        } else if (this.task.stop) {
+            return this.task.stop
+        } else {
+            return moment().toDate()
+        }
+    }
+
+    error(err) {
         return err //+ ` \n Task: ${JSON.stringify(this.task)}`
     }
 }
