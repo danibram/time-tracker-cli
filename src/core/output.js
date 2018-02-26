@@ -6,8 +6,8 @@ import { humanParseDiff, calcRate } from './utils'
 
 export const sumarize = function(search, tasks, rate, full, format) {
     let table = new Table({
-        head: ['Duration', 'Dates', 'Task'],
-        colAligns: ['right', 'center', 'left'],
+        head: ['Name','Description', 'Dates', 'Duration'],
+        colAligns: ['left', 'center', 'center', 'left'],
         chars: {
             'top': '═'
             , 'top-mid': '╤'
@@ -28,16 +28,33 @@ export const sumarize = function(search, tasks, rate, full, format) {
     let head= `Search: ${search} \n`
 
     tasks.forEach((task, index) => {
+		let description = (task.task.description() && task.task.description() !== '')
+		? task.task.description()
+		: '-'
+        let name = task.name
         task = task.task
 
         let duration = task.getSeconds()
         total += duration
 
-        let description = (task.description() && task.description() !== '')
-            ? task.description()
-            : task.name
+        // Avoid excesive width for proper console fit
+        let splitWidth = (str, len) => {
+            let arr = []
+            while (str != '') {
+                if (str.length > len) {
+                    arr.push(str.substring(0,len))
+                    str = str.substring(len);
+                } else {
+                    arr.push(str)
+                    break
+                }
+            }
+            return arr.join('\n')
+        }
+        description = splitWidth(description, 51)
+        name = splitWidth(name, 40)
 
-        table.push([description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
+        table.push([name, description, moment(task.getStartDate()).format(format), humanParseDiff(duration)])
     })
 
     if (full){
@@ -52,6 +69,7 @@ export const sumarize = function(search, tasks, rate, full, format) {
             table.push(
                 [
                     { rowSpan:2, content: `${colors.red('Search:')} "${search}"`, vAlign:'center' },
+                    { rowSpan:2, content: '', vAlign:'center' },
                     { rowSpan:2, content: colors.red('Total time'), vAlign:'center' },
                     { rowSpan:2, content: humanParseDiff(total), vAlign:'center' }
                 ],

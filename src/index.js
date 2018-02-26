@@ -123,11 +123,23 @@ program
     })
 
 program
-    .command('export')
-    .description('Export the tasks in a JSON')
+    .command('export [task_string]')
+    .description('Export the tasks in json (default) or md format')
     .alias('e')
-    .action(function(key) {
-        console.log(JSON.stringify(manager.getTasksJson(), null, 4))
+    .option('-f --format [format]')
+    .option('-s --start [start date. Example: "2017/05/28"]')
+    .option('-e --end [end date. Example: "2018/05/28"]')
+    .action(function(key, options) {
+		switch (options.format ? options.format.toLowerCase() : undefined){
+			case "json": case undefined:
+				console.log(JSON.stringify(manager.getTasksJson(key, options.start, options.end), null, 4))
+				break
+			case "markdown": case "md":
+				console.log(manager.getTasksMd(key, options.start, options.end))
+				break
+			default:
+				console.log("Format not supported")
+		}
         EXEC = true
     })
 

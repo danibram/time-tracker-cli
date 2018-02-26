@@ -174,7 +174,7 @@ export default class Task {
     }
 
     getStartDate(){
-        if (this.task.timings){
+        if (this.task.timings && this.task.timings[0]){
             return this.task.timings[0].start
         } else {
             return this.task.start
