@@ -292,6 +292,8 @@ Run `npm build` to build the module.
 
 * [@MarAvFe][maravfe]
 * [@mlndz28][mlndz28]
+* [@RyanZim][ryanzim]
+* [@kohei-takata][kohei-takata]
 
 ## License
 
@@ -302,3 +304,5 @@ Licensed under the MIT license. 2015
 [npm-home-module]: https://www.npmjs.com/package/time-tracker-cli
 [maravfe]: https://github.com/MarAvFe
 [mlndz28]: https://github.com/mlndz28
+[ryanzim]: https://github.com/RyanZim
+[kohei-takata]: https://github.com/kohei-takata
