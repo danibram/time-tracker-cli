@@ -12,8 +12,8 @@ import { outputVertical, cliError, outputConfig } from './core/output'
 import autocomplete from './autocomplete'
 
 const config = new Configstore(pkg.name, {
-    tasks:{},
-    config:{
+    tasks: {},
+    config: {
         'format.output': 'DD/MM'
     }
 })
@@ -36,7 +36,9 @@ program
     .description('Start task with a description.')
     .alias('s')
     .action(function(key, description) {
-        description = (description) ? Array.isArray(description) ? description.join(' ') : description : null
+        description = description
+            ? Array.isArray(description) ? description.join(' ') : description
+            : null
         manager.startTask(key, description)
         EXEC = true
     })
@@ -59,13 +61,14 @@ program
         EXEC = true
     })
 
-
 program
     .command('finish <task_key> [description]')
     .description('Stop task, you can add a description')
     .alias('f')
     .action(function(key, description) {
-        description = (description) ? Array.isArray(description) ? description.join(' ') : description : null
+        description = description
+            ? Array.isArray(description) ? description.join(' ') : description
+            : null
         manager.stopTask(key, description)
         EXEC = true
     })
@@ -101,10 +104,12 @@ program
 
 program
     .command('report [task_string] [rate]')
-    .description('Report time of the tasks, empty for select all tasks. Can pass a rate (1h).')
+    .description(
+        'Report time of the tasks, empty for select all tasks. Can pass a rate (1h).'
+    )
     .alias('r')
     .action(function(tasks, rate) {
-        tasks = (tasks) ? tasks : 'all'
+        tasks = tasks ? tasks : 'all'
         manager.sumarize(tasks, rate)
         EXEC = true
     })
@@ -115,9 +120,13 @@ program
     .alias('l')
     .action(function(key) {
         setInterval(() => {
-            let text = outputVertical('Task:', key, humanParseDiff(manager.getTime(key)))
+            let text = outputVertical(
+                'Task:',
+                key,
+                humanParseDiff(manager.getTime(key))
+            )
             process.stdout.write(text)
-            process.stdout.moveCursor(0,-2)
+            process.stdout.moveCursor(0, -2)
         }, 1000)
         EXEC = true
     })
@@ -129,17 +138,33 @@ program
     .option('-f --format [format]')
     .option('-s --start [start date. Example: "2017/05/28"]')
     .option('-e --end [end date. Example: "2018/05/28"]')
+    .option('-x --expanded [You want to see all timings for a task.]')
     .action(function(key, options) {
-		switch (options.format ? options.format.toLowerCase() : undefined){
-			case "json": case undefined:
-				console.log(JSON.stringify(manager.getTasksJson(key, options.start, options.end), null, 4))
-				break
-			case "markdown": case "md":
-				console.log(manager.getTasksMd(key, options.start, options.end))
-				break
-			default:
-				console.log("Format not supported")
-		}
+        switch (options.format ? options.format.toLowerCase() : undefined) {
+            case 'json':
+            case undefined:
+                console.log(
+                    JSON.stringify(
+                        manager.getTasksJson(key, options.start, options.end),
+                        null,
+                        4
+                    )
+                )
+                break
+            case 'markdown':
+            case 'md':
+                console.log(
+                    manager.getTasksMd(
+                        key,
+                        options.start,
+                        options.end,
+                        options.expanded
+                    )
+                )
+                break
+            default:
+                console.log('Format not supported')
+        }
         EXEC = true
     })
 
@@ -148,7 +173,7 @@ program
     .description('Remove tasks from the list. Empty for select all tasks')
     .alias('del')
     .action(function(string) {
-        string = (string) ? string : 'all'
+        string = string ? string : 'all'
         manager.delete(string)
         EXEC = true
     })
@@ -169,9 +194,7 @@ program
         EXEC = true
     })
 
-program
-    .parse(process.argv)
-
+program.parse(process.argv)
 
 if (program.updateDB) {
     manager.update()
