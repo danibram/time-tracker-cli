@@ -226,7 +226,11 @@ $ timer r <key of the task> > report.json
 
 ### Log (log|l)
 
-log|l <task_key> Logs the time of the task
+Log a task if you want to have the real timer on one console.
+
+```
+$ timer log <key of the task>
+```
 
 ### Export (export|e)
 
