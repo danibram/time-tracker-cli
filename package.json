@@ -1,50 +1,50 @@
 {
-  "name": "time-tracker-cli",
-  "version": "2.3.1",
-  "description": "Tiny time tracker",
-  "keywords": [
-    "time",
-    "tracker",
-    "timer",
-    "cli",
-    "time log",
-    "time logger",
-    "logger"
-  ],
-  "bin": {
-    "timer": "./bin/timer"
-  },
-  "main": "./lib/exports",
-  "scripts": {
-    "build": "node_modules/.bin/babel -s -d lib src",
-    "dev": "npm run build -- -w",
-    "test": "mocha -R spec --require source-map-support/register lib/__test__/*.spec.js ",
-    "test:dev": "npm run test -- -w",
-    "postinstall": "timer --updateDB"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/danibram/time-tracker-cli"
-  },
-  "author": "Daniel Biedma <info@dbr.io>",
-  "license": "ISC",
-  "devDependencies": {
-    "babel": "^6.3.26",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0"
-  },
-  "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "cli-table2": "^0.2.0",
-    "colors": "^1.1.2",
-    "commander": "^2.11.0",
-    "configstore": "^3.1.1",
-    "flat": "^4.0.0",
-    "inquirer": "^3.3.0",
-    "moment": "^2.19.1",
-    "omelette": "^0.4.5",
-    "update-notifier": "^2.3.0"
-  }
+    "name": "time-tracker-cli",
+    "version": "2.5.0",
+    "description": "Tiny time tracker",
+    "keywords": [
+        "time",
+        "tracker",
+        "timer",
+        "cli",
+        "time log",
+        "time logger",
+        "logger"
+    ],
+    "bin": {
+        "timer": "./bin/timer"
+    },
+    "main": "./lib/exports",
+    "scripts": {
+        "build": "node_modules/.bin/babel -s -d lib src",
+        "dev": "npm run build -- -w",
+        "test": "mocha -R spec --require source-map-support/register lib/__test__/*.spec.js ",
+        "test:dev": "npm run test -- -w"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/danibram/time-tracker"
+    },
+    "author": "Daniel Biedma <info@dbr.io>",
+    "license": "ISC",
+    "devDependencies": {
+        "babel": "^6.3.26",
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "babel-preset-es2015": "^6.22.0",
+        "babel-preset-stage-0": "^6.22.0",
+        "prettier": "^1.10.2"
+    },
+    "dependencies": {
+        "babel-polyfill": "^6.26.0",
+        "cli-table2": "^0.2.0",
+        "colors": "^1.1.2",
+        "commander": "^2.14.1",
+        "configstore": "^3.1.1",
+        "flat": "^4.0.0",
+        "inquirer": "^3.3.0",
+        "moment": "^2.20.1",
+        "omelette": "^0.4.5",
+        "update-notifier": "^2.3.0"
+    }
 }
